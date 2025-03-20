@@ -35,8 +35,6 @@ public class Product {
     private Instant createdAt;
     private Instant updatedAt;
 
-    public Product() {
-    }
 
     public Product(int id, String code, String name, String description, String image, String category, double price, int quantity, String internalReference, int shellId, InventoryStatus inventoryStatus, double rating, Instant createdAt, Instant updatedAt) {
         this.id = id;
