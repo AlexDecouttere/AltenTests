@@ -32,6 +32,10 @@ public class ProductController {
         return productData.map(product -> new ResponseEntity<>(product, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @GetMapping
+    public ResponseEntity<List<Product>> getAllProducts() {
+        return new ResponseEntity<>(productRepository.findAll(), HttpStatus.OK);
+    }
 
     @PatchMapping("/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable("id") int id, @RequestBody Product productDetails) throws IntrospectionException {
@@ -49,26 +53,6 @@ public class ProductController {
         }else {
             return  new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteProduct(@PathVariable("id") int id) {
-        if (isAdmin()) {
-            try {
-                productRepository.deleteById(id);
-                return new ResponseEntity<>(HttpStatus.OK);
-            } catch (Exception e) {
-                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }else {
-            return  new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
-    }
-
-
-    @GetMapping
-    public ResponseEntity<List<Product>> getAllProducts() {
-        return new ResponseEntity<>(productRepository.findAll(), HttpStatus.OK);
     }
 
     @PostMapping
@@ -90,6 +74,20 @@ public class ProductController {
             }
         }
         else {
+            return  new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<HttpStatus> deleteProduct(@PathVariable("id") int id) {
+        if (isAdmin()) {
+            try {
+                productRepository.deleteById(id);
+                return new ResponseEntity<>(HttpStatus.OK);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+        }else {
             return  new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
     }

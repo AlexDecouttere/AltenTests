@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.conf;
 
 import com.example.demo.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
@@ -18,9 +18,9 @@ public class ApplicationConfig {
     public UserDetailsService userDetailsService() {
         return email -> userRepository.findByEmail(email)
                 .map(user -> org.springframework.security.core.userdetails.User
-                        .withUsername(user.getEmail())  // Use email as username
-                        .password(user.getPassword())   // Hashed password
-                        .authorities("USER")            // Default role
+                        .withUsername(user.getEmail())
+                        .password(user.getPassword())
+                        .authorities("USER")
                         .build())
                 .orElseThrow(() -> new RuntimeException("User not found with email: " + email));
     }

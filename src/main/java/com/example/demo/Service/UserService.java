@@ -1,5 +1,6 @@
-package com.example.demo;
+package com.example.demo.Service;
 
+import com.example.demo.conf.JwtUtil;
 import com.example.demo.controller.dto.AuthRequest;
 import com.example.demo.controller.dto.RegisterRequest;
 import com.example.demo.entity.User;

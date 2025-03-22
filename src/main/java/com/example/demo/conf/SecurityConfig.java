@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.conf;
 
 import com.example.demo.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
@@ -36,18 +36,19 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/**").permitAll()  // Allow login & registration
+                        .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/products").permitAll()
                         .requestMatchers("/products/**").permitAll()
+                        .requestMatchers("/cart/**").authenticated()
                         .requestMatchers(HttpMethod.DELETE,"/products").authenticated()
                         .requestMatchers(HttpMethod.GET,"/products").authenticated()
                         .requestMatchers(HttpMethod.POST,"/products").authenticated()
                         .requestMatchers(HttpMethod.PATCH,"/products").authenticated()
-                        .anyRequest().authenticated()  // Secure other endpoints
+                        .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)  // No sessions (stateless)
-                ).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);; // Add JWT filter;
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                ).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
